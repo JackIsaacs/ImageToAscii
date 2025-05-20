@@ -13,6 +13,7 @@
 /ImageToAscii/
 /x64/
 
+
 # CMake
 CMakeFiles/
 CMakeCache.txt
@@ -20,7 +21,8 @@ cmake_install.cmake
 Makefile
 
 # IDEs
-.idea/
+/.idea/
+/.vs/
 *.sln
 *.vcxproj*
 *.user
@@ -29,3 +31,4 @@ Makefile
 
 # Rider
 *.iml
+/.idea/
