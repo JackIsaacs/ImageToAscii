@@ -1,5 +1,31 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+# Build artifacts
+/build/
+/bin/
+/out/
+*.exe
+*.obj
+*.o
+*.lib
+*.dll
+*.pdb
+*.so
+*.dylib
+/ImageToAscii/
+/x64/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDEs
+.idea/
+*.sln
+*.vcxproj*
+*.user
+*.opensdf
+*.log
+
+# Rider
+*.iml
