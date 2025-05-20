@@ -18,6 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\tasks\load_image_threaded_task.cpp" />
+    <ClCompile Include="src\tasks\threaded_task.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\tasks\load_image_threaded_task.h" />
+    <ClInclude Include="src\tasks\threaded_task.h" />
+    <ClInclude Include="src\util\io.hpp" />
+    <ClInclude Include="src\util\image_loader.hpp" />
+    <ClInclude Include="src\util\image_manipulation.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{88698506-CAC0-48C0-ACAF-5D349938390F}</ProjectGuid>
@@ -109,6 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,9 +166,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="ImageToAscii.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
