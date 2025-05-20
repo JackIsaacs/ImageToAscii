@@ -32,3 +32,4 @@ Makefile
 # Rider
 *.iml
 /.idea/
+*.dotsettings
