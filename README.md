@@ -4,4 +4,5 @@ This is a basic program that will prompt the user for an image, analyse each pix
 
 For example, please see Shrek below!
 
-![image](https://github.com/user-attachments/assets/ba1a16c6-acce-457f-ad7f-958d5466a80b)
+![image](https://github.com/user-attachments/assets/9216ca4c-348c-438a-bda1-b700bda94a54)
+
