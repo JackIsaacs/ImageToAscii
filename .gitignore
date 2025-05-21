@@ -12,7 +12,7 @@
 *.dylib
 /ImageToAscii/
 /x64/
-
+/output/
 
 # CMake
 CMakeFiles/

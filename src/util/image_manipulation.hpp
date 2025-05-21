@@ -1,19 +1,25 @@
 ﻿#pragma once
-#include <string>
 
-typedef unsigned int UINT;
-typedef unsigned char BYTE;
+#include <string>
+#include <iostream>
+
+#include "../base_types.h"
 
 namespace ImageManipulation
 {
-    inline char GetAsciiForPixel(BYTE r, BYTE g, BYTE b, BYTE a, float power = 1.0f)
+    inline char GetAsciiForPixel(const std::vector<BYTE>& pixelColors, float power = 1.0f)
     {
-        const int sum = r + g + b + a;
-        const float percent = pow(static_cast<float>(sum) / (255.0f * 4.0f), power);
+        int sum = 0;
+        for (const BYTE pixelColor : pixelColors)
+        {
+            sum += pixelColor;
+        }
+        
+        const float percent = pow(static_cast<float>(sum) / (255.0f * static_cast<float>(pixelColors.size())), power);
 
         const std::string gradient = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:\",^`'.";
         const size_t index = static_cast<size_t>(percent * (gradient.size() - 1));
-        char asciiChar = gradient[index];
+        const char asciiChar = gradient[index];
     
         return asciiChar;
     }
@@ -22,15 +28,22 @@ namespace ImageManipulation
     {
         UINT stride = 4;
         const size_t pixelCount = bytes.size();
-        if (pixelCount % 4 == 0)
+        for (UINT potentialStride = 4; potentialStride > 0; --potentialStride)
         {
-            stride = 4;
-        }
-        else if (pixelCount % 3 == 0)
-        {
-            stride = 3;
+            if (pixelCount % potentialStride == 0)
+            {
+                stride = potentialStride;
+                break;
+            }
         }
 
+        if (stride == 0)
+        {
+            return {};
+        }
+
+        std::cout << "stride: " << stride << '\n';
+            
         // How many strides it takes to cross the width of the image, so we can make a new line in the buffer
         const UINT imageStrideWidth = imageWidth * stride;
 
@@ -39,12 +52,15 @@ namespace ImageManipulation
         UINT currentStrideWidth = 0;
         for (UINT i = 0; i < bytes.size(); i += stride)
         {
-            BYTE r = bytes[i];
-            BYTE g = bytes[i + 1];
-            BYTE b = bytes[i + 2];
-            BYTE a = (stride == 4) ? bytes[i + 3] : 255;
+            std::vector<BYTE> pixelColors;
+            pixelColors.reserve(stride);
+            
+            for (UINT strideIdx = 0; strideIdx < stride; ++strideIdx)
+            {
+                pixelColors.push_back(bytes[i + strideIdx]);
+            }
 
-            buffer += GetAsciiForPixel(r, g, b, a, power);
+            buffer += GetAsciiForPixel(pixelColors, power);
 
             currentStrideWidth += stride;
             if (currentStrideWidth >= imageStrideWidth)

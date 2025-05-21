@@ -20,15 +20,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\tasks\load_image_threaded_task.cpp" />
+    <ClCompile Include="src\tasks\image_to_ascii_task.cpp" />
+    <ClCompile Include="src\tasks\load_image_task.cpp" />
     <ClCompile Include="src\tasks\threaded_task.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\tasks\load_image_threaded_task.h" />
+    <ClInclude Include="src\base_types.h" />
+    <ClInclude Include="src\tasks\image_to_ascii_task.h" />
+    <ClInclude Include="src\tasks\load_image_task.h" />
     <ClInclude Include="src\tasks\threaded_task.h" />
     <ClInclude Include="src\util\io.hpp" />
     <ClInclude Include="src\util\image_loader.hpp" />
     <ClInclude Include="src\util\image_manipulation.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

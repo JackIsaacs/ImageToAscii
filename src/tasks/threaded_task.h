@@ -3,6 +3,9 @@
 #include <mutex>
 #include <thread>
 
+#define TASK_OK 0
+#define TASK_ERROR 1
+
 class ThreadedTask
 {
 public:
@@ -10,7 +13,7 @@ public:
     virtual ~ThreadedTask() = default;
     
     void Start();
-    bool CanJoin();
+    int WaitForThread();
     double GetDuration() const;
 
 protected:
@@ -20,6 +23,9 @@ protected:
     std::mutex m_mutex;
 
     std::chrono::time_point<std::chrono::steady_clock> m_startTime;
-    bool m_finished = false;
     double m_duration = 0;
+
+    std::condition_variable m_cv;
+    bool m_finished = false;
+    int m_exitCode = TASK_OK;
 };

@@ -4,9 +4,7 @@
 #include <vector>
 
 #include "threaded_task.h"
-
-typedef unsigned int UINT;
-typedef unsigned char BYTE;
+#include "../base_types.h"
 
 struct ImageInfo
 {
@@ -19,15 +17,15 @@ struct ImageInfo
     {
     }
 
-    UINT w,h;
+    UINT w,h = 0;
     std::vector<BYTE> pixels;
 };
 
-class LoadImageThreadedTask final : public ThreadedTask
+class LoadImageTask final : public ThreadedTask
 {
 public:
-    explicit LoadImageThreadedTask(std::wstring m_file_name)
-        : m_fileName(std::move(m_file_name))
+    explicit LoadImageTask(std::wstring fileName)
+        : m_fileName(std::move(fileName))
     {
     }
     

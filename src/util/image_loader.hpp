@@ -19,8 +19,11 @@ namespace ImageLoader
             CLSCTX_INPROC_SERVER,
             IID_PPV_ARGS(&factory));
 
-        if (FAILED(hr)) return hr;
-
+        if (FAILED(hr))
+        {
+            return hr;
+        }
+        
         hr = factory->CreateDecoderFromFilename(filename, nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &decoder);
         if (FAILED(hr))
         {

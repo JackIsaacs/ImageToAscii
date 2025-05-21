@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <windows.h>
+#include <filesystem>
 
 namespace IO
 {
@@ -10,7 +11,6 @@ namespace IO
     {
         OPENFILENAME ofn;
         wchar_t buffer[MAX_PATH] = {0};
-        HANDLE hf;
 
         ZeroMemory(&ofn, sizeof(ofn));
         ofn.lStructSize = sizeof(ofn);
@@ -22,7 +22,7 @@ namespace IO
         ofn.lpstrFileTitle = nullptr;
         ofn.nMaxFileTitle = 0;
         ofn.lpstrInitialDir = nullptr;
-        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
         if (GetOpenFileName(&ofn)==TRUE)
         {
@@ -39,6 +39,15 @@ namespace IO
 
     inline void WriteBufferToFile(const std::string& filename, const std::string& buffer)
     {
+        namespace fs = std::filesystem;
+        fs::path path = filename;
+        fs::path directory = path.parent_path();
+
+        if (!directory.empty() && !fs::exists(directory))
+        {
+            fs::create_directory(directory);
+        }
+        
         std::ofstream file(filename, std::ios::out | std::ios::binary);
         if (!file)
         {
@@ -46,5 +55,7 @@ namespace IO
         }
 
         file.write(buffer.data(), static_cast<long long>(buffer.size()));
+
+        std::cout << "Written to: " << std::filesystem::current_path() / filename << "\n";
     }
 }

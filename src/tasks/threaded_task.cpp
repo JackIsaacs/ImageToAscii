@@ -6,18 +6,21 @@ void ThreadedTask::Start()
 {
     m_finished = false;
     m_startTime = Clock::now();
+    m_exitCode = TASK_OK;
     m_threadHandle = std::thread(&ThreadedTask::Task, this);
 }
 
-bool ThreadedTask::CanJoin()
+int ThreadedTask::WaitForThread()
 {
-    if (m_finished)
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_cv.wait(lock, [this]() { return m_finished; });
+    
+    if (m_threadHandle.joinable())
     {
         m_threadHandle.join();
-        return true;
     }
 
-    return false;
+    return m_exitCode;
 }
 
 double ThreadedTask::GetDuration() const
@@ -32,4 +35,5 @@ void ThreadedTask::Task()
     std::lock_guard<std::mutex> lock(m_mutex);
     m_duration = duration.count();
     m_finished = true;
+    m_cv.notify_one();
 }
