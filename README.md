@@ -1,4 +1,4 @@
-<h1> Read Me </h1>
+<h1> README </h1>
 
 This is a basic program that will prompt the user for an image, analyse each pixel, and produce a text file of the image converted to an ASCII format.
 
