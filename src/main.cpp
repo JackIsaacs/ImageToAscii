@@ -1,45 +1,14 @@
-#include <iostream>
 
-#include "tasks/image_to_ascii_task.h"
-#include "tasks/load_image_task.h"
-#include "util/image_manipulation.hpp"
-#include "util/io.hpp"
+#include "app/web_app.h"
 
 int main(int argc, char* argv[])
 {
-    const auto filePath = IO::OpenJPG();
-    std::wcout << filePath << "\n";
+    WebApp app;
+    app.Start();
 
-    if (filePath.empty())
-    {
-        std::cout << "Filepath is empty" << "\n";
-        return 0;
-    }
-    
-    LoadImageTask loadImageTask(filePath);
-    loadImageTask.Start();
-    
-    if (loadImageTask.WaitForThread() == TASK_ERROR)
-    {
-        return 0;
-    }
-
-    std::cout << "LoadImageTask took " << loadImageTask.GetDuration() << "s!" << "\n";
-    
-    auto image_info = loadImageTask.GetImageInfo();
-    std::cout << "width: " << image_info.w << " height: " << image_info.h << " pixel count: " << image_info.pixels.size() << "\n";
-
-    ImageToAsciiTask imageToAsciiTask(image_info.w, image_info.pixels, 1.0f);
-    imageToAsciiTask.Start();
-    
-    if (imageToAsciiTask.WaitForThread() == TASK_ERROR)
-    {
-        return 0;
-    }
-    
-    std::cout << "ImageToAsciiTask took " << imageToAsciiTask.GetDuration() << "s!" << "\n";
-
-    IO::WriteBufferToFile("output\\output.txt", imageToAsciiTask.GetOutputBuffer());
+    std::cout << "Server running. Go to localhost:8080. Press enter to close server" << "\n";
+    std::cin.get();
+    app.Shutdown();
     
     return 0;
 }

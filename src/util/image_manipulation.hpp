@@ -17,7 +17,7 @@ namespace ImageManipulation
         
         const float percent = pow(static_cast<float>(sum) / (255.0f * static_cast<float>(pixelColors.size())), power);
 
-        const std::string gradient = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:\",^`'.";
+        const std::string gradient = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~i!lI;:\",^`'.";
         const size_t index = static_cast<size_t>(percent * (gradient.size() - 1));
         const char asciiChar = gradient[index];
     
@@ -42,8 +42,6 @@ namespace ImageManipulation
             return {};
         }
 
-        std::cout << "stride: " << stride << '\n';
-            
         // How many strides it takes to cross the width of the image, so we can make a new line in the buffer
         const UINT imageStrideWidth = imageWidth * stride;
 
